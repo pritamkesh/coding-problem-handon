@@ -1,0 +1,37 @@
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic: "user_activity_avro_stream"
+  consumer_group: "user_activity_archiver"
+  auto_offset_reset: "earliest"
+  enable_auto_commit: true
+  auto_commit_interval_ms: 5000
+  max_poll_records: 100
+  session_timeout_ms: 30000
+
+s3:
+  bucket_name: "your-unique-bucket-name"
+  raw_events_prefix: "raw_events/user_activity"
+  processed_events_prefix: "processed_events/user_activity"
+  batch_size: 5
+  max_batch_time_seconds: 300
+
+event_producer:
+  events_per_second: 1
+  total_events: 20
+  event_types:
+    - page_view
+    - add_to_cart
+    - purchase
+  product_id_prefix: "PROD"
+  user_id_prefix: "USER"
+
+aws:
+  region: "us-east-1"
+  # Credentials should be configured via environment variables or AWS CLI
+  # aws_access_key_id: YOUR_ACCESS_KEY
+  # aws_secret_access_key: YOUR_SECRET_KEY
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S" 
